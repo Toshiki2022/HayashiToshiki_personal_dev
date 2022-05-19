@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>購入画面</title>
+<style>
+        div {
+            text-align: center;
+        }
+        label {
+            display: inline-block;
+            text-align: left;
+            width: 150px;
+        }
+
+</style>
+</head>
+<body>
+
+<h3>ご注文内容</h3>
+<!--カート内リスト-->
+<table border="1">
+    <tr>
+        <th>NO</th><th>商品名</th><th>値段</th><th>個数</th><th>小計</th><th></th>
+    </tr>
+</table>
+<!---->
+<hr>
+<div>
+<h3>お客様情報</h3>
+<form>
+    <label style="text-align: center">名前: </label><input type="text" name="name"><br>
+    <label style="text-align: center">住所: </label><input type="text" name="address"><br>
+    <label style="text-align: center">電話番号: </label><input type="text" name="tel"><br>
+    <label style="text-align: center">メールアドレス: </label><input type="text" name="email"><br>
+    <br>
+    <hr>
+    <h3>支払方法</h3>
+    <input type="radio" name="payment" value="クレジット" checked id="radio1"><label for="radio1">クレジット</label><br><br>
+    <input type="radio" name="payment" value="銀行振込" id="radio2"><label for="radio2">銀行振込</label><br><br>
+    <input type="radio" name="payment" value="後払い決済" id="radio3"><label for="radio3">後払い決済</label><br><br>
+    <input type="radio" name="payment" value="コンビニ・郵便局" id="radio4"><label for="radio4">コンビニ・郵便局</label><br><br>
+    <input type="radio" name="payment" value="着払い" id="radio5"><label for="radio5">着払い</label><br><br>
+    <br>
+    <input type="submit" value="確認画面に進む" style="background-color: red; color: white;"><br>
+</form>
+<p></p>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>ThankYou</title>
+</head>
+
+<body align="center">
+    <h3>ご注文ありがとうございました。</h3>
+    ご注文番号は
+    <h3>
+       <span th:text="${orderNumber}" style="color:red"></span>
+    </h3>
+    になります。
+    <br>
+    <br>
+    <a href="/item">ホームに戻る</a>
+    <!--<span th:replace="home"></span>-->
+</body>
+
+</html>

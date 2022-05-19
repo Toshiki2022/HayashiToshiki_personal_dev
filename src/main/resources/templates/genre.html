@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<title>ジャンルページ</title>
+<style type="text/css">
+div {
+	margin: auto;
+}
+
+label {
+	display: inline-block;
+	text-align: left;
+	width: 150px;
+}
+</style>
+</head>
+
+<body>
+
+	<h3 align="center">
+		ジャンル<a href="/item" style="margin-left: 250px;">ホームに戻る</a>
+	</h3>
+
+	<div
+		style="padding: 10px; width: 450px; margin-bottom: 10px; border: 5px double #333333; text-align: center; background-color: #00ffff"
+		align="center">
+		<a href="/item" style="padding: 7px">食品</a> <a href="/item"
+			style="padding: 7px">日用品</a> <a href="/item" style="padding: 7px">ファッション</a>
+		<a href="/item" style="padding: 7px">本</a> <a href="/item"
+			style="padding: 7px">映画</a> <a href="/item" style="padding: 7px">音楽</a>
+		<a href="/item" style="padding: 7px">ゲーム</a>
+	</div>
+	<div style="margin: 2px" align="center">
+		<span style="margin-right: 100px;">ジャンル名</span>
+		<!--DBからジャンル名取得-->
+
+		<button onclick="location.href='/item?sort=price_desc'" value="">価格の高い順</button>
+		<button onclick="location.href='/item?sort=price_asc'" value="">価格の低い順</button>
+	</div>
+
+	<br>
+	<table border="1" style="text-align: center" align="center">
+		<tr>
+			<th>NO</th>
+			<th>商品名</th>
+			<th>価格</th>
+		<tr th:each="list : ${list}">
+			<td th:text="${list.code}"></td>
+			<td th:text="${list.name}"></td>
+			<td th:text="${list.price}"></td>
+		</tr>
+	</table>
+
+</body>
+
+</html>
