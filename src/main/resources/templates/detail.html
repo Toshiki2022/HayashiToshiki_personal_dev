@@ -13,26 +13,27 @@
     }
     #goods {
       flex-grow: 1;
-      margin-right: 300px;
-      margin-left: 400px;
+      margin-right: 200px;
+      margin-left: 300px;
     }
 }
 </style>
 </head>
-<body>
-    <div align ="right"><a href="/items" id="home">ホーム画面に戻る</a></div>
+<body th:each="item:${item}">
+<h3 align ="left">商品詳細ページ</h3>
+    <div align ="right"><a href="/item" id="home">ホーム画面に戻る</a></div>
     <hr>
-
     <div id="parent">
-        <div id="img"><!--画像データの挿入--></div>
-
+    <span >
+     <img th:src="@{'/images/'+${item.image}}">
+</span>
         <div id="goods">
-            <h1><!--商品名-->商品名</h1>
-            <h4>ジャンル：<!--ジャンル-->ジャンル名</h4>
+            <h1 th:text="${item.name}"></h1>
+            <th:block th:each="genre:${genre}"><h4 th:text="${genre.name}">ジャンル：<!--ジャンル-->ジャンル名</h4></th:block>
     
 
             <form>
-                <font size="5">&yen;<!--値段-->1000</font>
+                <font size="5" th:text="'&yen;'+${item.price}"></font>
                 <div align="right">個数：<select name="quantity" size="1"><!--購入個数入力-->
                     <!--個数分表示-->
                     <option value="1">1個</option>
@@ -43,7 +44,7 @@
                     </select>
                 </div>
                 <br>
-                <div align ="right">残り<!--残り個数-->個です</div>
+                <div align ="right">残り<a th:text="${item.quantity}"></a>個です</div>
                 <br>
                 <div align ="right"><input type="submit" value = "カートに入れる" style="background-color: red; color: white;" ></div>
             </form>

@@ -4,7 +4,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 @Entity
 @Table(name = "item")
@@ -22,7 +21,7 @@ public class Item {
 	@Column(name = "price")
 	private Integer price;
 	
-	@Transient
+	@Column(name = "quantity")
 	private Integer quantity;
 	
 	@Column(name = "image")

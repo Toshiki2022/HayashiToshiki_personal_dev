@@ -7,21 +7,23 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ItemRepository extends JpaRepository<Item, Integer> {
-	List<Item> findByCategoryCode(Integer categoryCode);
-	
+	// 商品コード検索用
 	List<Item> findByCode(Integer code);
+
+	//ジャンル検索用
+	Integer findCategorycodeByCode(Integer code);
+	// 価格の昇順
+	List<Item> findAllByOrderByPrice();
+
+	//価格の降順
+	List<Item> findAllByOrderByPriceDesc();
+
+	// 文字検索
+	List<Item> findByNameLike(String keyword);
+	// 文字検索＆昇順降順
+	List<Item> findByNameLikeOrderByPrice(String keyword);
 	
-	List<Item> findByNameContaining(String keyword);
+	List<Item> findByNameLikeOrderByPriceDesc(String keyword);
+
 	
-	List<Item> findByPriceGreaterThanEqual(Integer min);
-	
-	List<Item> findByPriceLessThanEqual(Integer max);
-	
-	List<Item> findByPriceBetween(Integer min,Integer max);
-	
-	List<Item> findByNameContainingAndPriceGreaterThanEqual(String keyword,Integer min);
-	
-	List<Item> findByNameContainingAndPriceLessThanEqual(String keyword,Integer max);
-	
-	List<Item> findByNameContainingAndPriceBetween(String keyword,Integer min,Integer max);
 }

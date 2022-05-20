@@ -64,6 +64,9 @@ public class AccountController {
 		session.setAttribute("customerInfo",customerId);
 		session.setAttribute("categories", categoryRepository.findAll());
 		
+		mv.addObject("customerInfo", session.getAttribute("customerInfo"));
+		mv.addObject("sort", "");
+		mv.addObject("keyword", "");
 		List<Item> itemList = itemRepository.findAll();
 		mv.addObject("item", itemList);
 		
@@ -91,7 +94,7 @@ public class AccountController {
 	if (Objects.isNull(DuplicateId)) {
 		
 		Customer entity = new Customer(
-				null,id,name,email,password,address,tel,null);
+				null,id,name,email,password,address,tel,(long) 0);
 		customerRepository.save(entity);
 		mv.addObject("message", "登録完了");
 		mv.setViewName("/login");
