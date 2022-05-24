@@ -4,52 +4,83 @@
 <meta charset="UTF-8">
 <title></title>
 <style>
-@media (min-width: 600px) {
-    #parent {
-      display: flex;
-    }
-    #img {
-      flex-grow: 1;
-    }
-    #goods {
-      flex-grow: 1;
-      margin-right: 200px;
-      margin-left: 300px;
-    }
+@media ( min-width : 600px) {
+	#parent {
+		display: flex;
+	}
+	#img {
+		flex-grow: 1;
+	}
+	#goods {
+		flex-grow: 1;
+		margin-right: 200px;
+		margin-left: 200px;
+	}
 }
 </style>
 </head>
-<body th:each="item:${item}">
-<h3 align ="left">商品詳細ページ</h3>
-    <div align ="right"><a href="/item" id="home">ホーム画面に戻る</a></div>
-    <hr>
-    <div id="parent">
-    <span >
-     <img th:src="@{'/images/'+${item.image}}">
-</span>
-        <div id="goods">
-            <h1 th:text="${item.name}"></h1>
-            <th:block th:each="genre:${genre}"><h4 th:text="${genre.name}">ジャンル：<!--ジャンル-->ジャンル名</h4></th:block>
-    
+<body>
+	<h3 align="left">商品詳細ページ</h3>
+	<div align="right">
+		<a href="/item" id="home">ホーム画面に戻る</a>
+	</div>
+	<hr>
+	<div id="parent">
+	
+	
+		<span th:each="item:${item}"> 
+		<img th:src="@{'/images/'+${item.image}}">
+		</span>
+		
+		
+		<div id="goods" th:each="item:${item}">
+			<h1 th:text="${item.name}"></h1>
+			<th:block th:each="genre:${genre}">
+				<h4 th:text="'ジャンル:'+${genre.name}"></h4>
+			</th:block>
+			<form th:action="@{/cart/add/{code}/(code=${item.code})}" method="post">
+			
+			
+			
+				<h3><span th:if="${flag}!=0"><s th:text="'&yen;'+${item.price}"></s><br><a>ランク割引で</a></span></h3>
+				<span th:if="${flag}==0"><font size="5" th:text="'&yen;'+${item.price}"></font></span>
+		      <h3>
+				<th:block th:switch="${flag}">
+				<span style="color:red"> 
+				
+				<a th:case="1" th:text="'&yen;'+${RankPrice}"></a>
+				<a th:case="2" th:text="'&yen;'+${RankPrice}"></a>
+				<a th:case="3" th:text="'&yen;'+${RankPrice}"></a>
+				</span>
+				</th:block>
+				</h3>
+				<a></a>
+				
+				
+				
+				<div align="right">
+					個数：<select name="quantity" size="1">
+						<!--購入個数入力-->
+						<!--個数分表示-->
+						<option value="1">1個</option>
+						<option value="2">2個</option>
+						<option value="3">3個</option>
+						<option value="4">4個</option>
+						<option value="5">5個</option>
+					</select>
+				</div>
+				<br>
+				<div align="right">
+					残り<a th:text="${item.quantity}"></a>個です
+				</div>
+				<br>
+				<div align="right">
+					<input type="submit"value="カートに入れる">
 
-            <form>
-                <font size="5" th:text="'&yen;'+${item.price}"></font>
-                <div align="right">個数：<select name="quantity" size="1"><!--購入個数入力-->
-                    <!--個数分表示-->
-                    <option value="1">1個</option>
-                    <option value="2">2個</option>
-                    <option value="3">3個</option>
-                    <option value="4">4個</option>
-                    <option value="5">5個</option>
-                    </select>
-                </div>
-                <br>
-                <div align ="right">残り<a th:text="${item.quantity}"></a>個です</div>
-                <br>
-                <div align ="right"><input type="submit" value = "カートに入れる" style="background-color: red; color: white;" ></div>
-            </form>
-        </div>
-    </div>
+				</div>
+			</form>
+		</div>
+	</div>
 
 </body>
 </html>

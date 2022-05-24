@@ -9,7 +9,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "ordered_detail")
-public class OrderDetail {
+public class OrderedDetail {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "code")
@@ -24,23 +24,23 @@ public class OrderDetail {
 	@Column(name = "num")
 	private Integer quantity;
 	
-	public OrderDetail(Integer code, Integer orderedCode, Integer itemCode, Integer quantity) {
+	public OrderedDetail(Integer code, Integer orderedCode, Integer itemCode, Integer quantity) {
 		this(orderedCode, itemCode, quantity);
 		this.code = code;
 	};
 
-	public OrderDetail(Integer orderedCode, Integer itemCode, Integer quantity) {
+	public OrderedDetail(Integer orderedCode, Integer itemCode, Integer quantity) {
 		super();
 		this.orderedCode = orderedCode;
 		this.itemCode = itemCode;
 		this.quantity = quantity;
 	};
 
-	public OrderDetail(Integer orderCode, Item item) {
+	public OrderedDetail(Integer orderCode, Item item) {
 		this(orderCode, item.getCode(), item.getQuantity());
 	};
 
-	public OrderDetail() {
+	public OrderedDetail() {
 		super();
 	}
 

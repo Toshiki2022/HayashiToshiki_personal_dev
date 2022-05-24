@@ -11,7 +11,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "ordered")
-public class Order {
+public class Ordered {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "code")
@@ -24,23 +24,43 @@ public class Order {
 	private Date orderedDate;
 
 	@Column(name = "total_price")
-	private Integer totalPrice;
+	private Long totalPrice;
 
 	@Column(name = "payment")
 	private String payment;
 
-	public Order(Integer code, Integer customerCode, Date orderedDate, Integer totalPrice) {
-		this(customerCode, orderedDate, totalPrice);
+	public Ordered(Integer code, Integer customerCode, Date orderedDate, Long totalPrice,String payment) {
+		this(customerCode, orderedDate, totalPrice,payment);
 		this.code = code;
 	}
 
-	public Order(Integer customerCode, Date orderedDate, Integer totalPrice) {
+	public Ordered(Integer customerCode, Date orderedDate, Long totalPrice,String payment) {
 		this.customerCode = customerCode;
 		this.orderedDate = orderedDate;
 		this.totalPrice = totalPrice;
+		this.payment = payment;
 	}
 
-	public Order() {
+	public Ordered() {
 		super();
+	}
+	public Integer getCode() {
+		return code;
+	}
+
+	public Integer getCustomerCode() {
+		return customerCode;
+	}
+
+	public Date getOrderedDate() {
+		return orderedDate;
+	}
+
+	public Long getTotalPrice() {
+		return totalPrice;
+	}
+
+	public String getPayment() {
+		return payment;
 	}
 }

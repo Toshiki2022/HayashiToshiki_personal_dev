@@ -15,25 +15,22 @@
 	<table border="1" align="center">
 		<tr>
 			<th>NO</th>
-			<th>商品名</th>
+			<th>注文日時</th>
 			<th>価格</th>
-			<th>個数</th>
-			<th>小計</th>
+			<th>支払方法</th>
+			<th>詳細</th>
 		</tr>
-		<!--  <tr th:each="item:${item}">
-			<td th:text="${item.value.code}"></td>
-			<td th:text="${item.value.name}"></td>
-			<td th:text="${item.value.price}"></td>
-			<td th:text="${item.value.quantity}"></td>
-			<td th:text="${item.value.price * item.value.quantity}"></td>
+		  <tr th:each="ordered:${ordered}">
+			<td th:text="${ordered.code}"></td>
+			<td th:text="${ordered.orderedDate}"></td>
+			<td th:text="${ordered.totalPrice}"></td>
+			<td th:text="${ordered.payment}"></td>
+			<td><form th:action="@{/item/orderhistorydetail/{code}/(code=${ordered.code})}">
+			<input type="submit" value="詳細"></form></td>
 		</tr>
-		<tr>
-			 <td align= "right" colspan = "5" th:text = "'総計：' + ${total}+'円'"></td>
-		</tr>-->
+		
 	</table>
 	<br>
-	<a href="/item">ホームに戻る</a>
-	<!--<span th:replace="home"></span>-->
 </body>
 
 </html>

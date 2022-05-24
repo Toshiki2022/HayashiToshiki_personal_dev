@@ -22,34 +22,34 @@
             </tr>
             <tr>
                     <td align= "right" colspan = "5" th:text = "'総計：' + ${total}"></td>
-                    <td></td>
+                    
             </tr>
         </table>
         <hr>
         
         <h3 align="center">お客様情報</h3>
         
-        <form action = "/order/doOrder" method = "post" style="text-align:center">
+        <form th:action = "'/order/doOrder/'+${payment}" method = "post" style="text-align:center">
             <table align="center">
             <tr>
                     <td>名前：</td>
-                    <td th:text = "${session.order.name}"></td>
+                    <td th:text = "${name}"></td>
             </tr>
             <tr>
                     <td>住所：</td>
-                    <td th:text = "${session.order.address}"></td>
+                    <td th:text = "${address}"></td>
             </tr>
             <tr>
                     <td>電話番号：</td>
-                    <td th:text = "${session.order.tel}"></td>
+                    <td th:text = "${tel}"></td>
             </tr>
             <tr>
                     <td>メールアドレス：</td>
-                    <td th:text = "${session.order.email}"></td>
+                    <td th:text = "${email}"></td>
             </tr>
             <tr>
                     <td>支払方法：</td>
-                    <td th:text = "${session.order.payment}"></td>
+                    <td th:text = "${payment}"></td>
             </tr>
 
             </table>

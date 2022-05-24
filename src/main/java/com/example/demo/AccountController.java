@@ -51,7 +51,8 @@ public class AccountController {
 			mv.setViewName("login");
 			return mv;
 		}
-		//idチェック
+		
+		//DBにIDとPASSがあるかチェック
 		Customer customerId = customerRepository.findById(id);
 		Customer customerPass = customerRepository.findByPassword(password);
 		if (Objects.isNull(customerId)&&Objects.isNull(customerPass)) {
