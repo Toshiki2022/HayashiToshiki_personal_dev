@@ -23,8 +23,29 @@ public class CartController {
 			@PathVariable(name = "code") int code,
 			@RequestParam(name = "quantity") int quantity) {
 		Cart cart = getCartFromSession();
-		
+		Customer customer=(Customer) session.getAttribute("customerInfo");
 		Item item = itemRepository.findById(code).get();
+		//タイムセール割引、ランク割引
+		double timeSell = ItemController.judgeTimeSell();
+		//選択商品の値段
+		int selectItemPrice =item.getPrice() ;
+		//タイムセール処理
+		
+		if(timeSell<1.0) {
+		 selectItemPrice=(int)(selectItemPrice-(selectItemPrice*timeSell));
+		}
+		
+		//ランク割引
+		long total = customer.getTotal();
+		if (total >= 200000) {
+			selectItemPrice = (int) ((int) selectItemPrice - (selectItemPrice* 0.1));
+		} else if (total >= 100000 && total < 200000) {
+			selectItemPrice = (int) ((int) selectItemPrice - (selectItemPrice* 0.05));
+		} else if (total >= 50000 && total < 100000) {
+			selectItemPrice = (int) ((int) selectItemPrice -(selectItemPrice * 0.03));
+		}
+		
+		item.setPrice(selectItemPrice);
 		cart.addCart(item, quantity);
 		mv.addObject("total", cart.getTotal());
 		mv.addObject("items", cart.getItems());

@@ -39,6 +39,10 @@ public class Item {
 		return name;
 	}
 
+	public void setPrice(Integer price) {
+		this.price = price;
+	}
+
 	public String getImage() {
 		return image;
 	}

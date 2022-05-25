@@ -22,7 +22,7 @@
 		</tr>
 		  <tr th:each="ordered:${ordered}">
 			<td th:text="${ordered.code}"></td>
-			<td th:text="${ordered.orderedDate}"></td>
+			<td th:text= "${ordered.orderedDate}"></td>
 			<td th:text="${ordered.totalPrice}"></td>
 			<td th:text="${ordered.payment}"></td>
 			<td><form th:action="@{/item/orderhistorydetail/{code}/(code=${ordered.code})}">

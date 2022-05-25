@@ -47,6 +47,7 @@ public class OrderedController {
 			@RequestParam("address") String address, @RequestParam("tel") String tel,
 			@RequestParam("email") String email, @RequestParam("payment") String payment) {
 		Cart cart = getCartFromSession();
+		//session.setA("payment,payment");
 		mv.addObject("name", name);
 		mv.addObject("address", address);
 		mv.addObject("tel", tel);
@@ -63,23 +64,27 @@ public class OrderedController {
 	public ModelAndView doOrder(
 			ModelAndView mv, 
 			@PathVariable(name = "payment") String payment) {
+		//(String)session.getA("payment");
 		Customer customer = (Customer) session.getAttribute("customerInfo");
 		Cart cart = getCartFromSession();
 		Ordered order = new Ordered(customer.getCode(), new Date(), cart.getTotal(), payment);
+		
+		//顧客のこれまでの購入金額を更新
 		Long customerTotal=customer.getTotal();
 		customer.setTotal(customerTotal+cart.getTotal());
 		customerRepository.save(customer);
+		//注文内容をDBに保存
 		int orderCode = orderedRepository.saveAndFlush(order).getCode();
-
+		
 		Map<Integer, Item> items = cart.getItems();
 		List<OrderedDetail> orderDetails = new ArrayList<>();
-		
+		//注文詳細をDBに記録
 		for (Item item : items.values()) {
 			orderDetails.add(new OrderedDetail(orderCode, item.getCode(), item.getQuantity()));
 			
 		}
-		
 		orderDetailRepository.saveAll(orderDetails);
+		
 		session.setAttribute("cart", new Cart());
 		// 画面返却用注文番号を設定
 		mv.addObject("orderNumber", orderCode);

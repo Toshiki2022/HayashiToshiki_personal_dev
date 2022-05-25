@@ -31,9 +31,9 @@
 		<input type="text" name="keyword" th:value="${keyword}"> <input
 			type="submit" value="検索">
 	</form>
-	
+
 	<div style="text-align: right">
-	<p>ソート機能</p>
+		<p>ソート機能</p>
 		<a th:href="@{'/item?sort=price_desc&keyword=' + ${keyword}}">価格の高い順</a><br>
 		<a th:href="@{'/item?sort=price_asc&keyword=' + ${keyword}}">価格の低い順</a>
 	</div>
@@ -42,8 +42,8 @@
 	<br>
 	<br>
 
-	
-    <div style="text-align: center; background-color: aqua; padding: 10px">
+
+	<div style="text-align: center; background-color: aqua; padding: 10px">
         <div style = "display:inline-flex">
         
        <form method="post" name="genre1" action="/item/genre" >
@@ -129,11 +129,10 @@
 		</tr>
 		<tr th:each="item:${item}">
 			<td th:text="${item.code}"></td>
-			<td>
-			<span th:if="${item.quantity}>=1"> <a th:href="'/item/'+${item.code}" th:text="${item.name}"></a></span> 
-			<span th:if="${item.quantity}<=0"> <a>在庫切れ</a></span>
-			</td>
-			<td th:text="${item.price}"></td>
+			<td><span th:if="${item.quantity}>=1"> <a
+					th:href="'/item/'+${item.code}" th:text="${item.name}"></a></span> <span
+				th:if="${item.quantity}<=0"> <a>在庫切れ</a></span></td>
+			<td><a th:text="${item.price}"></a></td>
 		</tr>
 	</table>
 </body>
