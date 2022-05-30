@@ -3,10 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <title>購入画面</title>
+<link th:href="@{/css/style.css}" rel="stylesheet">
 <style>
-div {
-	text-align: center;
-}
+
 
 label {
 	display: inline-block;
@@ -17,9 +16,13 @@ label {
 </head>
 <body>
 
+<div id="PageCenter">
+	<div style="text-align:right">
+	<a  href="/item" class="home">ホーム画面に戻る</a>
+	</div>
 	<h3>ご注文内容</h3>
-	<!--カート内リスト-->
-	<table border="1">
+
+	<table border="1" align="center">
 		<tr>
 			<th>NO</th>
 			<th>商品名</th>
@@ -36,11 +39,19 @@ label {
 			<td th:text="${item.value.price * item.value.quantity}"></td>
 			<td><a th:href="'/cart/delete/' + ${item.value.code}">削除</a></td>
 		</tr>
+		<tr>
+            <td align="right" colspan="5" th:text="'総計：' + ${total}"></td>
+        </tr>
 	</table>
 	<!---->
 	<hr>
 	<div>
-		<h3>お客様情報</h3>
+		<h3>お客様情報更新</h3>
+		  <span th:switch="${errorFlag}"  style="color: red"> 
+        <a th:case="1">未入力の項目があります。 </a> 
+        <a th:case="2">電話番号,メールアドレスは半角で入力してください </a> 
+        <a th:case="3">電話番号に半角数字以外が含まれています </a> 
+        </span>
 		<form action="/order/confirm" method="post">
 			<label style="text-align: center">名前: </label>
 			<input type="text" name="name" th:value="${session.customerInfo.name}" ><br>
@@ -68,10 +79,10 @@ label {
 			<br> 
 			<br> 
 			
-			<input type="submit" value="確認画面に進む" style="background-color: red; color: white;"  ><br>
+			<input type="submit" id="submit" value="確認画面に進む"><br>
 		
 		</form>
 	</div>
-
+</div>
 </body>
 </html>

@@ -10,6 +10,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "customer")
 public class Customer {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "code")
@@ -86,6 +87,19 @@ public class Customer {
 
 	public Long getTotal() {
 		return total;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public void setAddress(String address) {
+		this.address = address;
+	}
+	public void setTel(String tel) {
+		this.tel = tel;
 	}
 	public void setTotal(Long total) {
 		this.total = total;

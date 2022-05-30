@@ -4,19 +4,21 @@
 <head>
     <meta charset="UTF-8">
     <title>ThankYou</title>
+    <link th:href="@{/css/style.css}" rel="stylesheet">
 </head>
 
 <body align="center">
+<div id="PageCenter">
     <h3>ご注文ありがとうございました。</h3>
     ご注文番号は
-    <h3>
+    <h2>
        <span th:text="${orderNumber}" style="color:red"></span>
-    </h3>
+    </h2>
     になります。
     <br>
     <br>
-    <a href="/item">ホームに戻る</a>
-    <!--<span th:replace="home"></span>-->
+    <a href="/item" class="home">ホームに戻る</a>
+    </div>
 </body>
 
 </html>

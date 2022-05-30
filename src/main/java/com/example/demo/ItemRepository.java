@@ -8,16 +8,14 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ItemRepository extends JpaRepository<Item, Integer> {
 	// 商品コード検索用
-	
-	Item getByCode(Integer code);
-	List<Item> findByCode(Integer code);
+	Item findByCode(Integer code);
 //ジャンル検索用
 	List<Item> findAllByCategoryCode(Integer categoryCode);
 	
 	//ジャンル検索用
 	Item findCategorycodeByCode(Integer categoryCode);
 	
-	
+	List<Item> findAllByOrderByCodeAsc();
 	// 価格の昇順
 	List<Item> findAllByOrderByPrice();
 //ジャンルごとの価格の昇順
@@ -27,11 +25,13 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
 //ジャンルごとの価格の降順
 	List<Item> findAllByCategoryCodeOrderByPriceDesc(Integer categoryCode);
 	// 文字検索
-	List<Item> findByNameLike(String keyword);
+	List<Item> findByNameLikeOrderByCategoryCodeAsc(String keyword);
 	// 文字検索＆昇順降順
 	List<Item> findByNameLikeOrderByPrice(String keyword);
 	
 	List<Item> findByNameLikeOrderByPriceDesc(String keyword);
+	
+	List<Item> findAllByCategoryCodeOrderByImageAsc(Integer categoryCode);
 
 	
 }

@@ -3,11 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <title>カートの中身</title>
+<link th:href="@{/css/style.css}" rel="stylesheet">
 </head>
-<body style="text-align: right;">
-
-	<a href="/item">ホーム画面に戻る</a>
-	<hr>
+<body>
+<div id="PageCenter">
+<div style="text-align: right;">
+    <a  href="/item" class="home">ホーム画面に戻る</a>
+</div>
+<h3>カートの中身</h3>
 	<table border="1" align="center">
 		<tr>
 			<th>NO</th>
@@ -30,9 +33,16 @@
 	</table>
 
 	<br>
+
 	<form action="/order" style="text-align: center;">
-		<input type="submit" value="購入手続きへ進む"
-			style="background-color: red; color: white">
+	   <span th:if="${total}>0" >
+		<input type="submit" id="submit" value="購入手続きへ進む"
+			>
+		</span>
+		  <span th:if="${total}<=0" >
+        <a>カートに何も入っていません！</a>
+        </span>
 	</form>
+	</div>
 </body>
 </html>

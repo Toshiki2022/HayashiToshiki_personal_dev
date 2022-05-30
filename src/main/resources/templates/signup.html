@@ -4,29 +4,40 @@
 <head>
 <meta charset="UTF-8">
 <title>新規登録</title>
-<style type="text/css">
-label {
-	display: inline-block;
-	text-align: left;
-	width: 150px;
-}
-</style>
+<link th:href="@{/css/style.css}" rel="stylesheet">
 </head>
 
-<body align="center">
-	<form action="/signup" method="post">
-		<h1>新規登録画面</h1>
-		<span th:text="${message}" style="color:red"></span>
-		<h3>
-			<label>ログインID</label><input type="text" name="id"><br> 
-			<label>パスワード</label><input type="text" name="password"><br>
-			<label>名前</label><input	type="text" name="name"><br>
-			<label>住所</label><input type="text" name="address"><br> 
-			<label>電話番号</label><input type="text" name="tel"><br>
-			<label>メールアドレス</label><input type="text" name="email"><br> 
-			<br> <input type="submit" value="登録">
-		</h3>
-	</form>
+<body>
+	<div id="PageCenter">
+	<br>
+		<form action="/signUp" method="post">
+			<h1>新規登録画面</h1>
+
+			<span th:switch="${errorFlag}" style="color: red"> 
+			<a th:case="1">未入力の項目があります。 </a> 
+			<a th:case="2">パスワード,電話番号,メールアドレスは半角で入力してください</a> 
+			<a th:case="3">電話番号に半角数字以外が含まれています </a> 
+			<a th:case="4">ログインIDが重複しています。</a>
+			</span>
+			<h3>
+				<label>ログインID</label><input type="text" name="id"><br>
+				<label>パスワード</label><input type="text" name="password"><br>
+				<label>名前</label><input type="text" name="name"><br> 
+				<label>住所</label><input type="text" name="address"><br> 
+				<label>電話番号</label><input type="text" name="tel"><br> 
+				<label>メールアドレス</label><input type="text" name="email"><br> <br> 
+				<input type="submit" id="submit" value="登録">
+			</h3>
+		</form>
+		<br>
+		<br>
+		<br>
+		<br>
+        <br>
+        <br>
+        <br>
+        <br>
+	</div>
 </body>
 
 </html>

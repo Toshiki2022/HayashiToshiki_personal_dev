@@ -1,0 +1,80 @@
+@charset "UTF-8";
+
+#PageCenter {
+	margin-left: auto; /* 左側マージンを自動的に空ける */
+	margin-right: auto; /* 右側マージンを自動的に空ける */
+	text-align: center; /* 中身を左側表示に戻す */
+	width: 900px; /* 幅を決定する */
+	background-color: white;
+}
+
+#PageCenter.left {
+	width: 300px;
+	float: left;
+}
+
+#PageCenter.right {
+	width: 660px;
+	float: right;
+}
+
+#submit {
+	position: relative;
+	display: inline-block;
+	font-weight: bold;
+	padding: 7px 10px 10px 10px;
+	text-decoration: none;
+	color: #FFF;
+	background: #a180dc;
+	transition: .4s;
+}
+
+#submit:hover {
+	background: #91b5fb;
+}
+
+.home {
+	position: relative;
+	display: inline-block;
+	font-weight: bold;
+	padding: 0.5em 1em;
+	text-decoration: none;
+	border-left: solid 4px #668ad8;
+	border-right: solid 4px #668ad8;
+	color: #668ad8;
+	background: #e1f3ff;
+	transition: .4s;
+}
+
+.home:hover {
+	background: #668ad8;
+	color: #FFF;
+}
+
+body {
+	margin: 0px; /* ページ全体のmargin */
+	padding: 0px; /* ページ全体のpadding */
+	text-align: center; /* 下記のautoに未対応用のセンタリング */
+	background-color: #cde4ff;
+}
+
+label {
+	display: inline-block;
+	text-align: center;
+	width: 150px;
+}
+
+h1 {
+	color: #364e96;
+	border: solid 3px #364e96;
+	padding: 0.5em;
+	border-radius: 0.5em;
+	background: #a180dc;
+}
+
+h3 {
+	padding: 0.5em 1em;
+	margin: 2em 0;
+	border: double 5px #4ec4d3;
+	background: #a180dc;
+}

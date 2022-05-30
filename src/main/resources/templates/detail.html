@@ -2,7 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title></title>
+<title>商品詳細ページ</title>
+<link th:href="@{/css/style.css}" rel="stylesheet">
 <style>
 @media ( min-width : 600px) {
 	#parent {
@@ -13,74 +14,79 @@
 	}
 	#goods {
 		flex-grow: 1;
-		margin-right: 200px;
-		margin-left: 200px;
 	}
 }
 </style>
 </head>
 <body>
-	<h3 align="left">商品詳細ページ</h3>
+<div id="PageCenter">
+<br>
+	<h1 align="left">商品詳細ページ</h1>
 	<div align="right">
-		<a href="/item" id="home">ホーム画面に戻る</a>
+		<a href="/item" class="home">ホーム画面に戻る</a>
 	</div>
 	<hr>
 	<div id="parent">
-	
-	
 		<span th:each="item:${item}"> 
 		<img th:src="@{'/images/'+${item.image}}">
 		</span>
 		
 		
 		<div id="goods" th:each="item:${item}">
-			<h1 th:text="${item.name}"></h1>
+			<h2 th:text="${item.name}"></h2>
 			<th:block th:each="genre:${genre}">
 				<h4 th:text="'ジャンル:'+${genre.name}"></h4>
 			</th:block>
 			<form th:action="@{/cart/add/{code}/(code=${item.code})}" method="post">
-			
-			
-			
-				<h3><span th:if="${flag}!=0"><s th:text="'&yen;'+${item.price}"></s><br><a>ランク割引で</a></span></h3>
-				<span th:if="${flag}==0"><font size="5" th:text="'&yen;'+${item.price}"></font></span>
-		      <h3>
-				<th:block th:switch="${flag}">
-				<span style="color:red"> 
+				<h3>
+				<span th:if="${flag}!=0"><s th:text="'&yen;'+${item.price}"></s><br>
+				<a>ランク割引で</a>
+				</span>
 				
+				<span th:if="${flag}==0"><font size="5" th:text="'&yen;'+${item.price}"></font></span>
+		     
+		     
+				<th:block th:switch="${flag}">
+				 
+				 <span style="color:red"> 
 				<a th:case="1" th:text="'&yen;'+${RankPrice}"></a>
 				<a th:case="2" th:text="'&yen;'+${RankPrice}"></a>
 				<a th:case="3" th:text="'&yen;'+${RankPrice}"></a>
-				</span>
+				</span>	
 				</th:block>
-				</h3>
-				<a></a>
-				
-				
-				
+		</h3>
+
 				<div align="right">
 					個数：<select name="quantity" size="1">
-						<!--購入個数入力-->
-						<!--個数分表示-->
+						<th:block th:if="${item.quantity}>=1">
 						<option value="1">1個</option>
+						</th:block>
+						<th:block th:if="${item.quantity}>=2">
 						<option value="2">2個</option>
+						</th:block>
+						<th:block th:if="${item.quantity}>=3">
 						<option value="3">3個</option>
+						 </th:block>
+						<th:block th:if="${item.quantity}>=4">
 						<option value="4">4個</option>
+						</th:block>
+						<th:block th:if="${item.quantity}>=5">
 						<option value="5">5個</option>
+	                    </th:block>
 					</select>
 				</div>
 				<br>
 				<div align="right">
-					残り<a th:text="${item.quantity}"></a>個です
+					在庫数:<a th:text="${item.quantity}"></a>個
 				</div>
 				<br>
 				<div align="right">
-					<input type="submit"value="カートに入れる">
-
+					<input type="submit" id="submit" value="カートに入れる">
 				</div>
+				<br>
 			</form>
 		</div>
 	</div>
-
+</div>
 </body>
 </html>

@@ -4,11 +4,13 @@
 <head>
 <meta charset="UTF-8">
 <title>注文履歴</title>
+<link th:href="@{/css/style.css}" rel="stylesheet">
 </head>
 
 <body align="center">
+<div id="PageCenter">
 	<h3>
-		注文履歴<a href="/item" style="margin-left: 250px;">ホームに戻る</a>
+		注文履歴<a href="/item" style="margin-left: 250px;" class="home">ホームに戻る</a>
 	</h3>
 
 	<br>
@@ -18,19 +20,17 @@
 			<th>注文日時</th>
 			<th>価格</th>
 			<th>支払方法</th>
-			<th>詳細</th>
 		</tr>
 		  <tr th:each="ordered:${ordered}">
 			<td th:text="${ordered.code}"></td>
-			<td th:text= "${ordered.orderedDate}"></td>
+			<td th:text= "${#dates.format(ordered.orderedDate,'yyyy/MM/dd')}"></td>
 			<td th:text="${ordered.totalPrice}"></td>
 			<td th:text="${ordered.payment}"></td>
-			<td><form th:action="@{/item/orderhistorydetail/{code}/(code=${ordered.code})}">
-			<input type="submit" value="詳細"></form></td>
 		</tr>
 		
 	</table>
 	<br>
+	</div>
 </body>
 
 </html>

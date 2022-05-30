@@ -22,18 +22,18 @@ public class OrderedDetail {
 	private Integer itemCode;
 
 	@Column(name = "num")
-	private Integer quantity;
+	private Integer num;
 	
-	public OrderedDetail(Integer code, Integer orderedCode, Integer itemCode, Integer quantity) {
-		this(orderedCode, itemCode, quantity);
+	public OrderedDetail(Integer code, Integer orderedCode, Integer itemCode, Integer num) {
+		this(orderedCode, itemCode, num);
 		this.code = code;
 	};
 
-	public OrderedDetail(Integer orderedCode, Integer itemCode, Integer quantity) {
+	public OrderedDetail(Integer orderedCode, Integer itemCode, Integer num) {
 		super();
 		this.orderedCode = orderedCode;
 		this.itemCode = itemCode;
-		this.quantity = quantity;
+		this.num = num;
 	};
 
 	public OrderedDetail(Integer orderCode, Item item) {
@@ -68,13 +68,15 @@ public class OrderedDetail {
 		this.itemCode = itemCode;
 	}
 
-	public Integer getQuantity() {
-		return quantity;
+	public Integer getNum() {
+		return num;
 	}
 
-	public void setQuantity(Integer quantity) {
-		this.quantity = quantity;
+	public void setNum(Integer num) {
+		this.num = num;
 	}
+
+
 
 	
 }

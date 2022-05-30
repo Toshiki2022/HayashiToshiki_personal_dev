@@ -3,122 +3,87 @@
 <head>
 <meta charset="UTF-8">
 <title>ホーム画面</title>
+<link th:href="@{/css/style.css}" rel="stylesheet">
 </head>
 <body style="text-align: center;">
-	<div style="text-align: left">
+<div id="PageCenter">
+	<div style="text-align: left;">
 		<a href="/">ログアウト</a>
 	</div>
+	<h3>ショッピングサイト</h3>
 	<div style="text-align: right;">
-		<a href="/item/history">注文履歴</a> <a href="/item/cart">カートの中身</a> <br>
-		ランク：
+		<a href="/item/history">注文履歴</a> / <a href="/item/cart">カートの中身</a> <br>
+		ランク:
 		<th:block th:if="${session.customerInfo.total<50000}">
 			<a>ノーマル</a>
 		</th:block>
 		<th:block
 			th:if="${session.customerInfo.total>=50000&&session.customerInfo.total<100000}">
-			<a>ブロンズ</a>
+			<a  style=color:#b87333;>ブロンズ</a>
 		</th:block>
 		<th:block
 			th:if="${session.customerInfo.total>=100000&&session.customerInfo.total<200000}">
-			<a>シルバー</a>
+			<a style=color:#c0c0c0;>シルバー</a>
 		</th:block>
 		<th:block th:if="${session.customerInfo.total>=200000}">
-			<a>ゴールド</a>
+			<a style=color:#e6b422;>ゴールド</a>
 		</th:block>
 	</div>
 
-	<form action="/item" style="text-align: center">
-		<input type="text" name="keyword" th:value="${keyword}"> <input
-			type="submit" value="検索">
-	</form>
 
 	<div style="text-align: right">
-		<p>ソート機能</p>
+		ソート機能
 		<a th:href="@{'/item?sort=price_desc&keyword=' + ${keyword}}">価格の高い順</a><br>
 		<a th:href="@{'/item?sort=price_asc&keyword=' + ${keyword}}">価格の低い順</a>
 	</div>
 
-
-	<br>
-	<br>
-
-
 	<div style="text-align: center; background-color: aqua; padding: 10px">
-        <div style = "display:inline-flex">
-        
-       <form method="post" name="genre1" action="/item/genre" >
-            <input type="hidden" name="categoryCode" value=1>
-            <a href="javascript:genre1.submit()" style="padding-left:10px;">食品</a>
-        </form>
-        
-        <form method="post" name="genre2" action="/item/genre" >
-            <input type="hidden" name="categoryCode" value=2>
-            <a href="javascript:genre2.submit()" style="padding-left:10px">日用品</a>
-        </form>
-        <form method="post" name="genre3" action="/item/genre" >
-            <input type="hidden" name="categoryCode" value=3>
-            <a href="javascript:genre3.submit()" style="padding-left:10px">ファッション</a>
-        </form>
-        <form method="post" name="genre4" action="/item/genre" >
-            <input type="hidden" name="categoryCode" value=4>
-            <a href="javascript:genre4.submit()" style="padding-left:10px;">本</a>
-        </form>
-        <form method="post" name="genre5" action="/item/genre" >
-            <input type="hidden" name="categoryCode" value=5>
-            <a href="javascript:genre5.submit()" style="padding-left:10px">映画</a>
-        </form>
-        <form method="post" name="genre6" action="/item/genre" >
-            <input type="hidden" name="categoryCode" value=6>
-            <a href="javascript:genre6.submit()" style="padding-left:10px">音楽</a>
-        </form>
-        <form method="post" name="genre7" action="/item/genre" >
-            <input type="hidden" name="categoryCode" value=7>
-            <a href="javascript:genre7.submit()" style="padding-left:10px">ゲーム</a>
-        </form>
-        </div>
-    </div>
+		<div style="display: inline-flex">
 
+			<form method="post" name="genre1" action="/item/genre">
+				<input type="hidden" name="categoryCode" value=1> <a
+					href="javascript:genre1.submit()" style="padding-left: 10px;">食品</a>
+			</form>
 
-	<p style="text-align: center;">タイムセール</p>
-
-	<table border="1" align="center" text-align="center">
-		<tr>
-			<th>時間＼曜日</th>
-			<th>月</th>
-			<th>火</th>
-			<th>水</th>
-			<th>木</th>
-			<th>金</th>
-			<th>土</th>
-			<th>日</th>
-		</tr>
-		<tr>
-			<th>11:00～12:00</th>
-			<th>食品</th>
-			<th>日用品</th>
-			<th>ファッション</th>
-			<th>本</th>
-			<th>映画</th>
-			<th>音楽</th>
-			<th>ゲーム</th>
-		</tr>
-		<tr>
-			<th>17:00～18:00</th>
-			<th>本</th>
-			<th>映画</th>
-			<th>音楽</th>
-			<th>ゲーム</th>
-			<th>食品</th>
-			<th>日用品</th>
-			<th>ファッション</th>
-		</tr>
-
-	</table>
+			<form method="post" name="genre2" action="/item/genre">
+				<input type="hidden" name="categoryCode" value=2> <a
+					href="javascript:genre2.submit()" style="padding-left: 10px">日用品</a>
+			</form>
+			<form method="post" name="genre3" action="/item/genre">
+				<input type="hidden" name="categoryCode" value=3> <a
+					href="javascript:genre3.submit()" style="padding-left: 10px">ファッション</a>
+			</form>
+			<form method="post" name="genre4" action="/item/genre">
+				<input type="hidden" name="categoryCode" value=4> <a
+					href="javascript:genre4.submit()" style="padding-left: 10px;">本</a>
+			</form>
+			<form method="post" name="genre5" action="/item/genre">
+				<input type="hidden" name="categoryCode" value=5> <a
+					href="javascript:genre5.submit()" style="padding-left: 10px">映画</a>
+			</form>
+			<form method="post" name="genre6" action="/item/genre">
+				<input type="hidden" name="categoryCode" value=6> <a
+					href="javascript:genre6.submit()" style="padding-left: 10px">音楽</a>
+			</form>
+			<form method="post" name="genre7" action="/item/genre">
+				<input type="hidden" name="categoryCode" value=7> <a
+					href="javascript:genre7.submit()" style="padding-left: 10px">ゲーム</a>
+			</form>
+		</div>
+	</div>
+<br>
+		<marquee style=background-color:#e6e622;>	
+		<a>タイムセール！12:00～13:00</a> <a>17:00～18:00 の間は</a> <a style=color:red;>全商品10%OFF</a>
+		</marquee></p>
 
 
 	<hr>
 
-	<br>
+	 <form action="/item" style="text-align: center">
+        <input type="text" name="keyword" th:value="${keyword}"> 
+        <input type="submit" id="submit" value="検索">
+    </form>
+
 
 
 	<table border="1" align="center">
@@ -130,10 +95,16 @@
 		<tr th:each="item:${item}">
 			<td th:text="${item.code}"></td>
 			<td><span th:if="${item.quantity}>=1"> <a
-					th:href="'/item/'+${item.code}" th:text="${item.name}"></a></span> <span
-				th:if="${item.quantity}<=0"> <a>在庫切れ</a></span></td>
+					th:href="'/item/'+${item.code}" th:text="${item.name}"></a></span> 
+					<span th:if="${item.quantity}<=0">
+					<a th:text="${item.name}+'は在庫切れです'"></a>
+				</span>
+			</td>
+			
 			<td><a th:text="${item.price}"></a></td>
 		</tr>
 	</table>
+
+	</div>
 </body>
 </html>

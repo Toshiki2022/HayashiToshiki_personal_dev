@@ -3,20 +3,41 @@
 <head>
 <meta charset="UTF-8">
 <title>ログイン</title>
+<link th:href="@{/css/style.css}" rel="stylesheet">
+<style>
+div{
+    margin: auto;
+} 
+</style>
 </head>
 <body>
-
-<h2 style="margin-left: 400px">ログイン</h2>
-
+<div id="PageCenter">
+<h1 style="text-align:center">ログイン画面</h1>
+<div style="padding: 10px; width: 350px; margin-bottom: 10px; 
+border: 5px double #333333; text-align: center; background-color: #00ffff">
 <form action="login" method="post">
-        <p style="text-align: center">ログインID : <input type="text" name="loginId" ></p>
-        <p style="text-align: center">パスワード : <input type="password" name="password"></p>
-        <p style="text-align: center"><span th:text="${message}" style="color:red"></span></p>
-        <p style="text-align: center"><input type="submit" value="ログイン"></p>
-    <p></p>
+        <p >ログインID : <input type="text" name="loginId" ></p>
+        <p >パスワード : <input type="password" name="password"></p>
+        <p ><span th:text="${message}" style="color:red"></span></p>
+        <p ><input type="submit" id="submit" value="ログイン"></p>
 </form>
-<p></p>
-<span style="margin-left: 400px"><a href="/new">新規登録</a></span>
+ </div>
+<span style="margin-right: 300px"><a href="/new">新規登録</a></span>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+</div>
 
 </body>
 </html>

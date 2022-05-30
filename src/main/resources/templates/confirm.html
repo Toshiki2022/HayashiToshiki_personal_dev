@@ -1,62 +1,67 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <meta charset="UTF-8">
-        <title>購入確認画面</title>
-    </head>
-    <body>
+<head>
+<meta charset="UTF-8">
+<title>購入確認画面</title>
+<link th:href="@{/css/style.css}" rel="stylesheet">
+</head>
+<body>
+<div id="PageCenter">
+	<h3 align="center">下記の内容で注文を確定しますか？</h3>
+	<h3 align="center">ご注文内容</h3>
 
-        <h3 align="center">下記の内容で注文を確定しますか？</h3>
-        <h3 align="center">ご注文内容</h3>
+	<table border="1" align="center">
+		<tr>
+			<th>NO</th>
+			<th>商品名</th>
+			<th>値段</th>
+			<th>個数</th>
+			<th>小計</th>
+		</tr>
+		<tr th:each="item:${items}">
+			<td th:text="${item.value.code}"></td>
+			<td th:text="${item.value.name}"></td>
+			<td th:text="${item.value.price}"></td>
+			<td th:text="${item.value.quantity}"></td>
+			<td th:text="${item.value.price * item.value.quantity}"></td>
+		</tr>
+		<tr>
+			<td align="right" colspan="5" th:text="'総計：' + ${total}"></td>
 
-        <table border="1" align="center">
-            <tr>
-                    <th>NO</th><th>商品名</th><th>値段</th><th>個数</th><th>小計</th>
-            </tr>
-            <tr th:each="item:${items}">
-                    <td th:text="${item.value.code}"></td>
-                    <td th:text="${item.value.name}"></td>
-                    <td th:text="${item.value.price}"></td>
-                    <td th:text="${item.value.quantity}"></td>
-                    <td th:text="${item.value.price * item.value.quantity}"></td>
-            </tr>
-            <tr>
-                    <td align= "right" colspan = "5" th:text = "'総計：' + ${total}"></td>
-                    
-            </tr>
-        </table>
-        <hr>
-        
-        <h3 align="center">お客様情報</h3>
-        
-        <form th:action = "'/order/doOrder/'+${payment}" method = "post" style="text-align:center">
-            <table align="center">
-            <tr>
-                    <td>名前：</td>
-                    <td th:text = "${name}"></td>
-            </tr>
-            <tr>
-                    <td>住所：</td>
-                    <td th:text = "${address}"></td>
-            </tr>
-            <tr>
-                    <td>電話番号：</td>
-                    <td th:text = "${tel}"></td>
-            </tr>
-            <tr>
-                    <td>メールアドレス：</td>
-                    <td th:text = "${email}"></td>
-            </tr>
-            <tr>
-                    <td>支払方法：</td>
-                    <td th:text = "${payment}"></td>
-            </tr>
+		</tr>
+	</table>
+	<hr>
 
-            </table>
+	<h3 align="center">お客様情報</h3>
 
-            <br>
+	<form action="/order/doOrder" method="post" style="text-align: center">
+		<table align="center">
+			<tr>
+				<td>名前：</td>
+				<td th:text="${session.name}" th:name="${name}"></td>
+			</tr>
+			<tr>
+				<td>住所：</td>
+				<td th:text="${session.address}"></td>
+			</tr>
+			<tr>
+				<td>電話番号：</td>
+				<td th:text="${session.tel}"></td>
+			</tr>
+			<tr>
+				<td>メールアドレス：</td>
+				<td th:text="${session.email}"></td>
+			</tr>
+			<tr>
+				<td>支払方法：</td>
+				<td th:text="${session.payment}"></td>
+			</tr>
 
-            <input type = "submit" value = "注文を確定する" style="background-color: red; color: white;" >
-            </form>  
-    </body>
+		</table>
+
+		<br> <input type="submit" value="注文を確定する"
+			style="background-color: red; color: white;">
+	</form>
+	</div>
+</body>
 </html>

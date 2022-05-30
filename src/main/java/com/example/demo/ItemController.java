@@ -14,17 +14,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-/*目標
- *割引された値段で購入できるよう購入処理を更新
-→ OrderedController.javaの修正
-
-
- ・一度に複数購入しても総計に反映されないバグ
- ・重複したログイン、パスがあるとログインできないバグ
- ・カートの中身がある状態で履歴にの詳細を押すと空になるバグ
- ・購入した後ランクが更新されるとエラーになる
- 
-*/
 @Controller
 public class ItemController {
 	@Autowired
@@ -40,14 +29,19 @@ public class ItemController {
 
 	// 全商品表示
 	@GetMapping("/item")
-	public ModelAndView items(ModelAndView mv, @RequestParam(name = "keyword", defaultValue = "") String keyword,
+	public ModelAndView items(
+			ModelAndView mv, 
+			@RequestParam(name = "keyword", defaultValue = "") String keyword,
 			@RequestParam(name = "sort", defaultValue = "") String sort) {
-
+		
+		if (session.getAttribute("customerInfo") == null) {
+			return illigalAccess();
+		}
 		List<Item> itemList = null;
 
 		// 全商品表示
 		if (keyword.equals("") && sort.equals("")) {
-			itemList = itemRepository.findAll();
+			itemList = itemRepository.findAllByOrderByCodeAsc();
 			// 文字入力なしの昇順降順
 		} else if (keyword.equals("") && "price_asc".equals(sort)) {
 			itemList = itemRepository.findAllByOrderByPrice();
@@ -56,12 +50,11 @@ public class ItemController {
 		}
 		// 文字入力がある場合
 		if (!keyword.equals("") && sort.equals("")) {
-			itemList = itemRepository.findByNameLike("%" + keyword + "%");
+			itemList = itemRepository.findByNameLikeOrderByCategoryCodeAsc("%" + keyword + "%");
 		} else if (!keyword.equals("") && "price_asc".equals(sort)) {
 			itemList = itemRepository.findByNameLikeOrderByPrice("%" + keyword + "%");
 		} else if (!keyword.equals("") && "price_desc".equals(sort)) {
 			itemList = itemRepository.findByNameLikeOrderByPriceDesc("%" + keyword + "%");
-			;
 		}
 
 		// タイムセール中商品の値段を更新
@@ -79,16 +72,22 @@ public class ItemController {
 
 	// ジャンル画面遷移
 	@PostMapping("/item/genre")
-	public ModelAndView itemsByGenre(ModelAndView mv, @RequestParam(name = "keyword", defaultValue = "") String keyword,
+	public ModelAndView itemsByGenre(
+			ModelAndView mv, 
+			@RequestParam(name = "keyword", defaultValue = "") String keyword,
 			@RequestParam(name = "sort", defaultValue = "") String sort,
-			@RequestParam(name = "categoryCode", defaultValue = "") Integer categoryCode) {
+			@RequestParam(name = "categoryCode", defaultValue = "1") Integer categoryCode) {
+
+		if (session.getAttribute("customerInfo") == null) {
+			return illigalAccess();
+		}
 
 		List<Item> itemList = null;
 
 		itemList = itemRepository.findAllByCategoryCode(categoryCode);
 
 		if (keyword.equals("") && sort.equals("")) {
-			itemList = itemRepository.findAllByCategoryCode(categoryCode);
+			itemList = itemRepository.findAllByCategoryCodeOrderByImageAsc(categoryCode);
 			// 文字入力なしの昇順降順
 		} else if (keyword.equals("") && "price_asc".equals(sort)) {
 			itemList = itemRepository.findAllByCategoryCodeOrderByPrice(categoryCode);
@@ -96,9 +95,9 @@ public class ItemController {
 			itemList = itemRepository.findAllByCategoryCodeOrderByPriceDesc(categoryCode);
 		}
 
-		// 文字入力がある場合
+		// 文字入力がある場合昇順降順
 		if (!keyword.equals("") && sort.equals("")) {
-			itemList = itemRepository.findByNameLike("%" + keyword + "%");
+			itemList = itemRepository.findByNameLikeOrderByCategoryCodeAsc("%" + keyword + "%");
 		} else if (!keyword.equals("") && "price_asc".equals(sort)) {
 			itemList = itemRepository.findByNameLikeOrderByPrice("%" + keyword + "%");
 		} else if (!keyword.equals("") && "price_desc".equals(sort)) {
@@ -107,7 +106,7 @@ public class ItemController {
 		// タイムセール中商品の値段を更新
 		double timeSell = ItemController.judgeTimeSell();
 		timeSellprice(timeSell);
-		
+
 		mv.addObject("sort", sort);
 		mv.addObject("keyword", keyword);
 		mv.addObject("categoryCode", categoryCode);
@@ -120,26 +119,30 @@ public class ItemController {
 	@GetMapping("/item/{code}")
 	public ModelAndView showItem(ModelAndView mv, @PathVariable(name = "code") int code) {
 
+		if (session.getAttribute("customerInfo") == null) {
+			return illigalAccess();
+		}
+
 		int flag = 0;
 		// アイテム
-		List<Item> itemList = itemRepository.findByCode(code);
+		Item items = itemRepository.findByCode(code);
 
-		Item itemCategorycode = itemRepository.getByCode(code);
+		Item itemCategorycode = itemRepository.findByCode(code);
 		Integer categoryCode = itemCategorycode.getCategoryCode();
 
 		List<Category> categoryList = categoryRepository.findByCode(categoryCode);
 
 		Customer customer = (Customer) session.getAttribute("customerInfo");
-		//timeSellにはdouble型の数字1,0.1が入る
+		// timeSellにはdouble型の数字1,0.1が入る
 		double timeSell = ItemController.judgeTimeSell();
-		int selectItemPrice =itemCategorycode.getPrice() ;
+		int selectItemPrice = itemCategorycode.getPrice();
 		timeSellprice(timeSell);
-		//タイムセール割引
-		
-		if(timeSell<1.0) {
-			 selectItemPrice=(int)(selectItemPrice-(selectItemPrice*timeSell));
-			}
-		
+		// タイムセール割引
+
+		if (timeSell < 1.0) {
+			selectItemPrice = (int) (selectItemPrice - (selectItemPrice * timeSell));
+		}
+
 		// ランクに応じて割引＆フラグ設定
 		long total = customer.getTotal();
 		if (total >= 200000) {
@@ -150,13 +153,12 @@ public class ItemController {
 			selectItemPrice = (int) ((int) selectItemPrice - (selectItemPrice * 0.05));
 		} else if (total >= 50000 && total < 100000) {
 			flag = 1;// Blonze
-			selectItemPrice = (int) ((int) selectItemPrice -(selectItemPrice * 0.03));
+			selectItemPrice = (int) ((int) selectItemPrice - (selectItemPrice * 0.03));
 		}
-		
-		
+
 		mv.addObject("RankPrice", selectItemPrice);
 		mv.addObject("flag", flag);
-		mv.addObject("item", itemList);
+		mv.addObject("item", items);
 		mv.addObject("genre", categoryList);
 		mv.setViewName("detail");
 		return mv;
@@ -166,6 +168,9 @@ public class ItemController {
 	@GetMapping("/item/history")
 	public ModelAndView history(ModelAndView mv) {
 
+		if (session.getAttribute("customerInfo") == null) {
+			return illigalAccess();
+		}
 		Customer customer = (Customer) session.getAttribute("customerInfo");
 		List<Ordered> ordered = orderedRepository.findAllByCustomerCode(customer.getCode());
 
@@ -173,10 +178,15 @@ public class ItemController {
 		mv.setViewName("orderhistory");
 		return mv;
 	}
+
 	// 注文履歴詳細
 	@GetMapping("/item/orderhistorydetail/{code}")
 	public ModelAndView historydetail(ModelAndView mv, @PathVariable("code") Integer code) {
-
+		
+		
+		if (session.getAttribute("customerInfo") == null) {
+			return illigalAccess();
+		}
 		session.removeAttribute("orderhistory");
 		Cart orderhistory = (Cart) session.getAttribute("orderhistory");
 		if (orderhistory == null) {
@@ -187,7 +197,7 @@ public class ItemController {
 		List<OrderedDetail> orderDetail = orderedDetailRepository.findAllByOrderedCode(code);
 		for (OrderedDetail lists : orderDetail) {
 			Item item = itemRepository.findById(lists.getItemCode()).get();
-			orderhistory.addCart(item, lists.getQuantity());
+			orderhistory.addCart(item, lists.getNum());
 		}
 
 		mv.addObject("items", orderhistory.getItems());
@@ -199,15 +209,21 @@ public class ItemController {
 	// カートの中身ページへ遷移
 	@GetMapping("/item/cart")
 	public ModelAndView cart(ModelAndView mv) {
+		if (session.getAttribute("customerInfo") == null) {
+			return illigalAccess();
+		}
+		Cart cart = getCartFromSession();
+
+		mv.addObject("items", cart.getItems());
+		mv.addObject("total", cart.getTotal());
 
 		mv.setViewName("cart");
 		return mv;
+
 	}
 
-	
-
+	// タイムセール中か判定
 	public static double judgeTimeSell() {
-
 		// 時刻のみフォーマット
 		DateTimeFormatter sdf = DateTimeFormatter.ofPattern("HHmm");
 		// 現在時刻
@@ -215,7 +231,7 @@ public class ItemController {
 		String tmp = currentDate.format(sdf);
 		int nowTime = Integer.parseInt(tmp);
 
-		if (nowTime >= 1300 && nowTime <= 1700) {
+		if (nowTime >= 1100 && nowTime <= 1200) {
 			return 0.1;
 		} else if (nowTime >= 1700 && nowTime <= 1800) {
 			return 0.1;
@@ -223,17 +239,36 @@ public class ItemController {
 		return 1.0;
 	}
 
+	// タイムセール中価格にセット
 	public void timeSellprice(double timeSell) {
 
 		List<Item> itemList = itemRepository.findAll();
-		//全商品割引
+		// 全商品割引
 		for (Item item : itemList) {
 			if (timeSell < 1.0) {
 				item.setPrice((int) (item.getPrice() - (item.getPrice() * timeSell)));
 			} else {
 				item.setPrice((int) (item.getPrice()));
 			}
-		}	
+		}
 	}
 
+	// 直接リンク防止用メソッド
+	public static ModelAndView illigalAccess() {
+		ModelAndView mv = new ModelAndView("redirect:/");
+		return mv;
+	}
+
+	private Cart getCartFromSession() {
+		Cart cart = (Cart) session.getAttribute("cart");
+		if (cart == null) {
+			cart = new Cart();
+			session.setAttribute("cart", cart);
+		}
+		return cart;
+	}
+	@GetMapping("/item/genre")
+	public ModelAndView illegalAddCart() {
+		return illigalAccess();
+	}
 }
