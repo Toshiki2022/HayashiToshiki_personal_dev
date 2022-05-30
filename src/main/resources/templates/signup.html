@@ -15,7 +15,7 @@
 
 			<span th:switch="${errorFlag}" style="color: red"> 
 			<a th:case="1">未入力の項目があります。 </a> 
-			<a th:case="2">パスワード,電話番号,メールアドレスは半角で入力してください</a> 
+			<a th:case="2">パスワード,電話番号は半角で入力してください</a> 
 			<a th:case="3">電話番号に半角数字以外が含まれています </a> 
 			<a th:case="4">ログインIDが重複しています。</a>
 			</span>
@@ -25,7 +25,7 @@
 				<label>名前</label><input type="text" name="name"><br> 
 				<label>住所</label><input type="text" name="address"><br> 
 				<label>電話番号</label><input type="text" name="tel"><br> 
-				<label>メールアドレス</label><input type="text" name="email"><br> <br> 
+				<label>メールアドレス</label><input type="email" name="email"><br> <br> 
 				<input type="submit" id="submit" value="登録">
 			</h3>
 		</form>

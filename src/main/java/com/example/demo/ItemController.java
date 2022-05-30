@@ -124,7 +124,6 @@ public class ItemController {
 		}
 
 		int flag = 0;
-		// アイテム
 		Item items = itemRepository.findByCode(code);
 
 		Item itemCategorycode = itemRepository.findByCode(code);

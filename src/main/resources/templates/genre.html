@@ -19,13 +19,13 @@
     <a>ノーマル</a>
     </th:block>
     <th:block th:if="${session.customerInfo.total>=50000&&session.customerInfo.total<100000}">
-    <a>ブロンズ</a>
+    <a  style=color:#b87333;>ブロンズ</a>
     </th:block>
     <th:block th:if="${session.customerInfo.total>=100000&&session.customerInfo.total<200000}">
-    <a>シルバー</a>
+<a style=color:#c0c0c0;>シルバー</a>
     </th:block>
     <th:block th:if="${session.customerInfo.total>=200000}">
-    <a>ゴールド</a>
+    <a style=color:#e6b422;>ゴールド</a>
     </th:block>
    
     </div>
@@ -82,12 +82,11 @@
     </div>
 
 
-   <div style="text-align: center;">
-        タイムセール
-        <p style="text-align: center; background-color: #00ffff">
-        <marquee>   <a>12:00～13:00</a> <a>17:00～18:00 の間は</a> <a>全商品10%OFF</a>
-        </marquee></p>
-    </div>
+   <p>
+   <marquee style=background-color:#e6e622;>    
+        <a>タイムセール！12:00～13:00</a> <a>17:00～18:00 の間は</a> <a style=color:red;>全商品10%OFF</a>
+   </marquee>
+   </p>
 
 
     <hr>

@@ -49,7 +49,7 @@ label {
 		<h3>お客様情報更新</h3>
 		  <span th:switch="${errorFlag}"  style="color: red"> 
         <a th:case="1">未入力の項目があります。 </a> 
-        <a th:case="2">電話番号,メールアドレスは半角で入力してください </a> 
+        <a th:case="2">電話番号は半角で入力してください </a> 
         <a th:case="3">電話番号に半角数字以外が含まれています </a> 
         </span>
 		<form action="/order/confirm" method="post">
@@ -60,7 +60,7 @@ label {
 			<label style="text-align: center">電話番号: </label>
 			<input type="text" name="tel" th:value="${session.customerInfo.tel}"><br> 
 			<label style="text-align: center">メールアドレス:</label>
-			<input type="text" name="email" th:value="${session.customerInfo.email}"><br> <br>
+			<input type="email" name="email" th:value="${session.customerInfo.email}"><br> <br>
 			<hr>
 			<h3>支払方法</h3>
 			<input type="radio" name="payment" value="クレジット" checked id="radio1">
