@@ -230,7 +230,7 @@ public class ItemController {
 		String tmp = currentDate.format(sdf);
 		int nowTime = Integer.parseInt(tmp);
 
-		if (nowTime >= 1100 && nowTime <= 1200) {
+		if (nowTime >= 1100 && nowTime <= 1700) {
 			return 0.1;
 		} else if (nowTime >= 1700 && nowTime <= 1800) {
 			return 0.1;
